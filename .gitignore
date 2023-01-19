@@ -1,0 +1,8 @@
+
+*.dat
+
+*.csv
+
+*.log
+
+__pycache__/
