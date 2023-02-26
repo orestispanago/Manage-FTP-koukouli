@@ -48,11 +48,11 @@ def read_dat_files(dat_files):
     return df_all
 
 
-def save_to_daily_files(df, folder="daily"):
+def save_to_daily_files(df, folder="daily", prefix=""):
     mkdir_if_not_exists(folder)
     days = [group[1] for group in df.groupby(df.index.date)]
     for day in days:
-        fpath = f'{folder}/{day.index[0].strftime("%Y%m%d")}.csv'
+        fpath = f'{folder}/{prefix}{day.index[0].strftime("%Y%m%d")}.csv'
         day.to_csv(fpath, mode="a", header=not os.path.exists(fpath))
         logger.debug(f"Wrote {len(day)} rows in {fpath}")
     logger.info(f"Saved {len(days)} daily files")
@@ -63,7 +63,7 @@ def main():
     download(remote_dat_files, local_folder="raw")
     local_dat_files = glob.glob("raw/*.dat")
     raw_data = read_dat_files(local_dat_files)
-    save_to_daily_files(raw_data, folder="daily")
+    save_to_daily_files(raw_data, folder="daily", prefix="koukouli1min_")
     daily_files = sorted(glob.glob("daily/*.csv"))
     upload_files(daily_files)
     archive_past_days(daily_files)
