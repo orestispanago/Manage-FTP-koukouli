@@ -1,12 +1,12 @@
 # Manage-FTP-koukouli
 
-Koukouli weather station uploads a ```.dat``` file every 5 minute to the FTP server.
+Koukouli weather station uploads a ```.dat``` file every 5 minutes to the FTP server.
 
 Each ```.dat``` file contains 5 1-min measurements.
 
-This script downloads the ```.dat``` files locally, and organizes them to to daily ```.csv``` files.
+This script downloads the ```.dat``` files locally, and organizes them to daily ```.csv``` files using the filename format: `YYYY/koukouli1min_YYYYMMDD.csv`
 
-The generated ```.csv``` files are uploaded to the FTP server and archived to locally.
+The generated ```.csv``` files are uploaded to the FTP server and archived locally.
 
 Both the remote and the loca raw ```.dat``` files are deleted after the ```.csv``` upload.
 
