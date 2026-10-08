@@ -3,6 +3,6 @@
 
 *.csv
 
-*.log
+logs/
 
 __pycache__/
