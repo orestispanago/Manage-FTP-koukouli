@@ -4,18 +4,16 @@ import logging
 import os
 from ftplib import FTP, error_perm
 
+from config import FTP_IP, FTP_PASS, FTP_USER
 from utils import mkdir_if_not_exists
 
-FTP_IP = ""
-FTP_USER = ""
-FTP_PASSWORD = ""
 FTP_DIR = "/dataloggers/koukouli"
 
 logger = logging.getLogger(__name__)
 
 
 def list_remote_dir(pattern="*.dat"):
-    with FTP(FTP_IP, FTP_USER, FTP_PASSWORD) as ftp_session:
+    with FTP(FTP_IP, FTP_USER, FTP_PASS) as ftp_session:
         ftp_session.cwd(FTP_DIR)
         ftp_dir_list = ftp_session.nlst()
     selected_files = fnmatch.filter(ftp_dir_list, pattern)
@@ -31,7 +29,7 @@ def download(remote_files, local_folder="raw"):
     logger.debug(
         f"{len(remaining)} files not found locally. Downloading them from FTP..."
     )
-    with FTP(FTP_IP, FTP_USER, FTP_PASSWORD) as ftp_session:
+    with FTP(FTP_IP, FTP_USER, FTP_PASS) as ftp_session:
         ftp_session.cwd(FTP_DIR)
         for count, fname in enumerate(remaining):
             with open(f"{local_folder}/{fname}", "wb") as f:
@@ -64,7 +62,7 @@ def make_dirs(ftp_session, folder_path):
 
 
 def upload_files(local_files):
-    with FTP(FTP_IP, FTP_USER, FTP_PASSWORD) as ftp_session:
+    with FTP(FTP_IP, FTP_USER, FTP_PASS) as ftp_session:
         ftp_session.cwd(FTP_DIR)
         for local_file in local_files:
             base_name = os.path.basename(local_file)
@@ -81,7 +79,7 @@ def upload_files(local_files):
 
 def delete_remote_files(remote_files):
     logger.debug("Deleting FTP files...")
-    with FTP(FTP_IP, FTP_USER, FTP_PASSWORD) as ftp_session:
+    with FTP(FTP_IP, FTP_USER, FTP_PASS) as ftp_session:
         ftp_session.cwd(FTP_DIR)
         for count, remote_file in enumerate(remote_files):
             ftp_session.delete(remote_file)

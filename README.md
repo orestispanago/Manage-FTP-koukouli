@@ -14,7 +14,13 @@ Both the remote and the loca raw ```.dat``` files are deleted after the ```.csv`
 
 ## Instructions
 
-Edit the FTP parameters in ```ftp.py```. 
+```
+sudo apt install python3-dotenv
+cp .env.example .env
+chmod 600 .env
+```
+
+Set the real values in `.env` (FTP credentials), replacing the placeholders. It is in `.gitignore`.
 
 To avoid overlapping cron job execution, use ```flock``` in crontab:
 
